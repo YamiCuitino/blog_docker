@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}Punto de Vista{% endblock %}
+
+{% block body %}
+
+</head>
+
+<body>
+
+    <div class=""> 
+            <h1>Punto de Vista</h1>
+            <h2>Tus pensamientos en cada publicación</h2>
+            <p>Queres empezar? Registrate!</p>
+    </div>
+    <div class="login-container">
+        <h1>Iniciar Sesión</h1>
+        <form action="/crear_usuario" method='post' >
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control w-50 p-2 m-2" name="nombre" placeholder="Enter the name">
+            <label for="correo">Correo electronico</label>
+            <input type="email" class="form-control w-50 p-2 m-2" name="correo" placeholder="Enter the email">
+            <label for="contraseña">Contraseña</label>
+            <input type="password" class="form-control w-50 p-2 m-2" name="contraseña" placeholder="Enter the password">
+            <button class="btn btn-success" type="submit">Registrar</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>otro template</title>
+</head>
+{% block body %}
+
+<!--<style>
+  body .col-sm-3{
+    background: rgb(255,255,255);
+    background: linear-gradient(279deg, rgba(255,255,255,1) 40%, rgba(209,189,34,1) 94%);
+    height: 2800px;
+  }
+
+</style>
+-->
+
+<body>
+    <div class="container-fluid">
+        <div class="row content">
+          <div class="col-sm-3 sidenav">
+            <h2>MINIBLOG</h2>
+            <hr>
+            <h5>Categorias</h5>
+            <ul class="nav nav-pills nav-stacked">
+              {% for categoria in categorias %}
+              <li><a href="{{ url_for('posteos', categoria_id=categoria.id) }}">{{ categoria.nombre }}</a></li>
+              {% endfor %}
+            </ul><br>
+            <div class="col-3">
+                <form action="/crear_posteo" method='post' class="pl-5">
+                    <h1>Crear Posteo</h1>
+                
+                    <label for="categorias">Seleccione la categoria del posteo</label>
+                    <select class="form-select" name="categorias" id="categorias">
+                      <option value="0">Seleccione una opcion</option>
+                      {% for categoria in categorias %}
+                      <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+                    <label for="titulo">Titulo</label>
+                    <input type="text" class="form-control w-100" name="titulo">
+                
+                    <label for="contenido">Contenido</label>
+                    <textarea type="text" class="form-control" name="contenido"></textarea>
+                    <br>
+                    <button class="btn btn-success " type="submit">Cargar posteo</button>
+                </form>
+            </div>
+          </div>
+          <br><br>
+          <div class="col-sm-6">    
+            <h4><small>RECENT POSTS</small></h4>
+            {% if categoria_elegida %}
+              <h4>Categoria: {{ categoria_elegida.nombre }}</h4>
+            {% endif %}
+            {% for posteo in posteos %}
+                <hr>
+                  <h2>{{posteo.titulo}}</h2>
+                  <h5><span class="glyphicon glyphicon-time"></span> Post by {{posteo.usuario.nombre}}, Hora :{{posteo.fecha_creacion}}.</h5>
+                  {% if posteo.categorias %}
+                  {% if posteo.categorias|length > 0 %}
+                       <h5><span class="label label-danger">{{ posteo.categorias[0].nombre }}</span></h5><br>
+                  {% endif %}
+                  {% endif %}
+                  <p>{{posteo.contenido}}</p>
+                <br><br>
+                <hr>
+                <h3>Comentarios</h3>
+                {% for comentario in posteo.comentarios %}
+                  <div class="card mb-2">
+                    <div class="card-body">
+                      <h6 class="card-text"><span class="glyphicon glyphicon-time"></span> Autor: {{comentario.usuario.nombre}}, Fecha: {{comentario.fecha_creacion}}</h6>
+                      <p class="card-text">{{ comentario.texto }}</p>
+                      <hr>
+                    </div>
+                  </div>
+                {% endfor %}
+      
+                <form action='/crear_comentario' method='post' role="form" >
+                  <input type="hidden" name="posteo_id" value="{{ posteo.id }}">
+                  <div class="form-group">
+                    <label for="comentario">Leave a Comment:</label>
+                    <input type="text" id="comentario" name="comentario" class="form-control w-100">
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                
+                <br><br>
+          
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+</body>
+</html>
+{% endblock %}
