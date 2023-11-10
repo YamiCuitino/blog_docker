@@ -1,20 +1,14 @@
+import os
 from datetime import *
-from flask import (
-    Flask,
-    render_template,
-    request,
-    redirect,
-    url_for
-    )
+
+from flask import Flask, redirect, render_template, request, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
-
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://usuario:contraseña@ip/nombre_db
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/efi_blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 
 db = SQLAlchemy(app=app)
 migrate = Migrate(app, db)
@@ -159,3 +153,5 @@ def otro_template():
     )
 
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0",port=5005)

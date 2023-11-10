@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sleep for 10 seconds before running migrations
 echo 'sleep 10 secs'
-sleep 40
+sleep 10
 
 echo 'run db script'
 # Define the number of retries
