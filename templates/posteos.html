@@ -1,37 +1,20 @@
 {% extends 'layout.html' %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>otro template</title>
-</head>
 {% block body %}
-
-<!--<style>
-  body .col-sm-3{
-    background: rgb(255,255,255);
-    background: linear-gradient(279deg, rgba(255,255,255,1) 40%, rgba(209,189,34,1) 94%);
-    height: 2800px;
-  }
-
-</style>
--->
-
 <body>
     <div class="container-fluid">
         <div class="row content">
           <div class="col-sm-3 sidenav">
-            <h2>MINIBLOG</h2>
+            <h2>PUNTO DE VISTA</h2>
             <hr>
             <h5>Categorias</h5>
             <ul class="nav nav-pills nav-stacked">
               {% for categoria in categorias %}
-              <li><a href="{{ url_for('posteos', categoria_id=categoria.id) }}">{{ categoria.nombre }}</a></li>
+              <li class="bg-danger text-dark"><a class="text-dark" href="{{ url_for('posteos', categoria_id=categoria.id) }}">{{ categoria.nombre }}</a></li>
               {% endfor %}
             </ul><br>
-            <div class="col-3">
+            
+           
+            <div class="col-6">
                 <form action="/crear_posteo" method='post' class="pl-5">
                     <h1>Crear Posteo</h1>
                 
@@ -49,34 +32,38 @@
                     <label for="contenido">Contenido</label>
                     <textarea type="text" class="form-control" name="contenido"></textarea>
                     <br>
-                    <button class="btn btn-success " type="submit">Cargar posteo</button>
+                    <button class="btn btn-danger" type="submit">Postear</button>
                 </form>
             </div>
+           
           </div>
           <br><br>
-          <div class="col-sm-6">    
-            <h4><small>RECENT POSTS</small></h4>
+          <div class="col-sm-8">    
+            <h3  class="text-center"><small>POSTEOS RECIENTES</small></h3>
             {% if categoria_elegida %}
-              <h4>Categoria: {{ categoria_elegida.nombre }}</h4>
+              <h4 class="text-center">Categoria: {{ categoria_elegida.nombre }}</h4>
             {% endif %}
             {% for posteo in posteos %}
                 <hr>
-                  <h2>{{posteo.titulo}}</h2>
-                  <h5><span class="glyphicon glyphicon-time"></span> Post by {{posteo.usuario.nombre}}, Hora :{{posteo.fecha_creacion}}.</h5>
+                <div class="bg-danger rounded">
+                  <br>
+                  <h2 class="text-center p-2 m-2">{{posteo.titulo}}</h2>
+                  <h5 class="text-center card-subtitle"><span class="glyphicon glyphicon-time"></span> Hora :{{posteo.fecha_creacion}}.</h5>
                   {% if posteo.categorias %}
                   {% if posteo.categorias|length > 0 %}
-                       <h5><span class="label label-danger">{{ posteo.categorias[0].nombre }}</span></h5><br>
+                       <h5 class="text-center"><span class="label label-danger">{{ posteo.categorias[0].nombre }}</span></h5><br>
                   {% endif %}
                   {% endif %}
-                  <p>{{posteo.contenido}}</p>
+                  <p class="card-body text-center">{{posteo.contenido}}</p>
+                  <br>
+                </div>
                 <br><br>
-                <hr>
                 <h3>Comentarios</h3>
                 {% for comentario in posteo.comentarios %}
                   <div class="card mb-2">
                     <div class="card-body">
-                      <h6 class="card-text"><span class="glyphicon glyphicon-time"></span> Autor: {{comentario.usuario.nombre}}, Fecha: {{comentario.fecha_creacion}}</h6>
-                      <p class="card-text">{{ comentario.texto }}</p>
+                      <h6 class="card-text"><span class="glyphicon glyphicon-time"></span> Fecha: {{comentario.fecha_creacion}}</h6>
+                      <p class="text-center p-3 m-3">{{ comentario.texto }}</p>
                       <hr>
                     </div>
                   </div>
@@ -88,11 +75,11 @@
                     <label for="comentario">Leave a Comment:</label>
                     <input type="text" id="comentario" name="comentario" class="form-control w-100">
                   </div>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="submit" class="btn btn-danger">comentar</button>
                 </form>
                 
                 <br><br>
-          
+                <hr>
             {% endfor %}
           </div>
         </div>
