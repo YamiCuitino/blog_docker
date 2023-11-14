@@ -12,7 +12,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Set the root password for MySQL
     ports:
       - "3307:3306"  # Map host port 3307 to container port 3306 for MySQL
-    command: --init-file /docker-entrypoint-initdb.d/create_schema.sql
     restart: always  # Restarts the MySQL container if it stops or crashes
     container_name: ${MYSQL_CONTAINER_NAME}
     volumes:
