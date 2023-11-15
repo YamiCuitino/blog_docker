@@ -2,8 +2,8 @@
 FROM python:3.9-alpine
 
 #Copia el directorio del contenedor.
-COPY . /blogDocker
-WORKDIR /blogDocker
+COPY . /blog_docker
+WORKDIR /blog_docker
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
@@ -14,7 +14,7 @@ EXPOSE 5005
 
 
 # Define environment variables
-ENV FLASK_APP=app/__init__.py
+ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 
